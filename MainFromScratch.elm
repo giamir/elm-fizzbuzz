@@ -1,7 +1,7 @@
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
-import Fizzbuzz exposing (..)
+import Fizzbuzz exposing (fizzbuzz)
 import String exposing (toInt)
 
 main =
@@ -30,7 +30,7 @@ update : Msg -> Model -> Model
 update msg model =
   case msg of
     Reset -> initModel
-    Save itemCount -> { outputValue = model.outputValue, inputValue = (String.toInt itemCount) }
+    Save itemCount -> { outputValue = model.outputValue, inputValue = Result.withDefault 0 (String.toInt itemCount) }
     FizzBuzz -> { outputValue = fizzbuzz model.inputValue, inputValue = model.inputValue }
 
 -- VIEW
@@ -38,7 +38,7 @@ update msg model =
 view : Model -> Html Msg
 view model = div [] [ 
     text "Hello World" 
-    , input [ attribute "type" "number", onInput Save ] []
+    , input [ attribute "type" "number", value (toString model.inputValue), onInput Save ] []
     , button [ onClick Reset ] [ text "Reset" ]
     , button [ onClick FizzBuzz  ] [ text "Fizzbuzz!"]
     , text model.outputValue

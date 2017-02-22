@@ -1,4 +1,4 @@
-module Fizzbuzz exposing (..)
+module Fizzbuzz exposing (fizzbuzz)
 
 
 fizzToString : Int -> String
